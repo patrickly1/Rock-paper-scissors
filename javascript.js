@@ -1,5 +1,3 @@
-console.log("Hello World")
-
 function getRandomInt() {
     return Math.floor(Math.random() * (3))
 }
@@ -44,31 +42,59 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    let player_score = 0;
-    let computer_score = 0;
+    const rockButton = document.querySelector("#rock");
+    const paperButton = document.querySelector("#paper");
+    const scissorsButton = document.querySelector("#scissors");
+    const resultsElement = document.getElementById("results");
+    const scoreElement = document.getElementById("score");
+    const gameElement = document.getElementById("game");
 
-    while (player_score < 5 && computer_score < 5) {
-        let player = getPlayerSelection();
-        let computer = getComputerChoice();
-        let result = playRound(player, computer);
+    rockButton.addEventListener("click", function(){
+        resultsElement.textContent = playRound("rock", getComputerChoice());
+        scoreElement.textContent = updateScores(resultsElement.textContent);
+        checkWinCondition();
+    });
+    paperButton.addEventListener("click", function(){
+        resultsElement.textContent = playRound("paper", getComputerChoice());
+        scoreElement.textContent = updateScores(resultsElement.textContent);
+        checkWinCondition();
+    });
+    scissorsButton.addEventListener("click", function(){
+        resultsElement.textContent = playRound("scissors", getComputerChoice());
+        scoreElement.textContent = updateScores(resultsElement.textContent);
+        checkWinCondition();
+    });
 
-        if (result === "It's a draw") {
-            console.log("It's a draw");
-        }   else if (result === "You lose") {
-                computer_score++;
-                console.log("You lose");
-        }   else {
-                player_score++;
-                console.log("You win");
-        }
-
-        console.log(`Player score: ${player_score}, Computer Score: ${computer_score}`);
     }
-    if (player_score === 5) {
-        console.log("You won the game");
+
+    
+function updateScores(result) {
+
+    if (result === "It's a draw") {
+        console.log("It's a draw");
+    }   else if (result === "You lose") {
+            computer_score++;
+            console.log("You lose");
     }   else {
-        console.log("You lose the game");
+            player_score++;
+            console.log("You win");
     }
+    return `Player score: ${player_score}, Computer Score: ${computer_score}`
 }
 
+function checkWinCondition() {
+    const gameElement = document.getElementById("game");
+    
+    if (player_score === 5) {
+        gameElement.textContent = "You won the game";
+    }   else if (computer_score === 5) {
+        gameElement.textContent = "You lose the game";
+    }
+    
+}
+
+let player_score = 0;
+let computer_score = 0;
 game()
+
+
